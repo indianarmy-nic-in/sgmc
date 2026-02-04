@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#eef2f7;
+}
+header{
+    background:#2c3e50;
+    color:#fff;
+    padding:20px;
+    text-align:center;
+}
+table{
+    width:95%;
+    margin:30px auto;
+    border-collapse:collapse;
+    background:#fff;
+}
+th,td{
+    padding:12px;
+    border:1px solid #ddd;
+    vertical-align: top;
+}
+th{
+    background:#3498db;
+    color:#fff;
+}
+.bio-box{
+    max-height:120px;
+    overflow:auto;
+    font-size:14px;
+    line-height:1.5;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Job Applications Dashboard</h1>
+    <p>Total Applications: <span id="total"></span></p>
+</header>
+
+<table id="appTable"></table>
+
+<script>
+const applications = JSON.parse(localStorage.getItem("applications") || "[]");
+document.getElementById("total").textContent = applications.length;
+
+let html = `
+<tr>
+    <th>Name</th>
+    <th>Mobile</th>
+    <th>Email</th>
+    <th>Job Role</th>
+    <th>City</th>
+    <th>State</th>
+    <th>About Candidate</th>
+</tr>
+`;
+
+applications.forEach(app => {
+    html += `
+    <tr>
+        <td>${app.fullName}</td>
+        <td>${app.mobile}</td>
+        <td>${app.email}</td>
+        <td>${app.jobRole}</td>
+        <td>${app.city}</td>
+        <td>${app.state}</td>
+        <td>
+            <div class="bio-box">
+                ${app.bio || '—'}
+            </div>
+        </td>
+    </tr>
+    `;
+});
+
+document.getElementById("appTable").innerHTML = html;
+</script>
+
+</body>
+</html>
